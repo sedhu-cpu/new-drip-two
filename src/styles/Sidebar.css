@@ -1,12 +1,33 @@
 /* Sidebar trigger area */
 .sidebar-trigger {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 100vh;
-  z-index: 100;
+  left: 300px; /* Outside sidebar when open */
+  top: 20px;
+  width: 40px;
+  height: 40px;
   background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 103; /* Higher than sidebar (99) and previous trigger (100/102) */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, left 0.3s ease;
+}
+
+.app-container:not(.sidebar-show) .sidebar-trigger {
+  left: 20px; /* Move back when sidebar is closed */
+}
+
+.sidebar-trigger:hover {
+  transform: scale(1.1); /* Hover effect */
+}
+
+/* Hamburger icon */
+.menu-icon {
+  font-size: 24px;
+  color: #a5b4fc;
 }
 
 /* Sidebar container */
@@ -27,22 +48,22 @@
 
 .sidebar.show {
   left: 0;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar.pinned {
   left: 0;
-  /* position: relative; */
 }
 
 /* Sidebar header */
 .sidebar-header {
-  padding: 20px;
+  padding: 20px 20px 20px 60px; /* Increased left padding to avoid overlap with trigger */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  z-index: 102; /* Ensure header is always clickable */
+  z-index: 101; /* Ensure header is clickable */
 }
 
 .sidebar-title {
@@ -177,11 +198,29 @@
     padding: 10px 14px;
     font-size: 13px;
   }
+  .sidebar-trigger {
+    left: 280px;
+  }
+  .app-container:not(.sidebar-show) .sidebar-trigger {
+    left: 15px;
+  }
+  .sidebar-header {
+    padding-left: 55px;
+  }
 }
 
 @media (max-width: 480px) {
   .main-content.shifted {
     margin-left: 0; /* On small screens, overlay instead of shifting */
+  }
+  .sidebar-trigger {
+    left: 260px;
+  }
+  .app-container:not(.sidebar-show) .sidebar-trigger {
+    left: 10px;
+  }
+  .sidebar-header {
+    padding-left: 50px;
   }
 }
 
@@ -195,10 +234,6 @@
     transform: translateX(0);
     opacity: 1;
   }
-}
-
-.sidebar.show {
-  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Custom styles for different sidebar states */
