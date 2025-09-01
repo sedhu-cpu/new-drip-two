@@ -1,15 +1,16 @@
 import SuggestionCard from "../components/SuggestionCard.jsx";
 import "../styles/SuggestionsGrid.css";
+import { FaFileAlt, FaFileSignature, FaBriefcase, FaFileContract } from 'react-icons/fa';
 
 const row1 = [
-  "Write a todo list for my day",
-  "Generate an image of Elon hugging Xi Jinping",
-  "Generate an image of Elon hugging Xi Jinping",
+  { text: "Resume Matcher", icon: FaFileAlt },
+  { text: "Resume Formatter", icon: FaFileSignature },
+  { text: "Job Description Improver", icon: FaBriefcase },
 ];
 
 const row2 = [
-  "Generate an image of Elon hugging Xi Jinping",
-  "Generate an image of Elon hugging Xi Jinping",
+  { text: "Contract Summary", icon: FaFileContract },
+  { text: "Policy QA", icon: null }, // Use null for no icon
 ];
 
 function SuggestionsGrid() {
@@ -17,15 +18,15 @@ function SuggestionsGrid() {
     <div className="suggestions-wrapper">
       {/* First Row */}
       <div className="suggestions-row">
-        {row1.map((text, index) => (
-          <SuggestionCard key={`row1-${index}`} text={text} />
+        {row1.map((item, index) => (
+          <SuggestionCard key={`row1-${index}`} text={item.text} icon={item.icon} />
         ))}
       </div>
 
       {/* Second Row */}
       <div className="suggestions-row second-row">
-        {row2.map((text, index) => (
-          <SuggestionCard key={`row2-${index}`} text={text} />
+        {row2.map((item, index) => (
+          <SuggestionCard key={`row2-${index}`} text={item.text} icon={item.icon} />
         ))}
       </div>
     </div>
