@@ -1,3 +1,4 @@
+// ...existing code...
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import SuggestionsGrid from './components/SuggestionsGrid';
@@ -6,27 +7,21 @@ import './App.css';
 import { Header } from './components/Header';
 
 function App() {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
   const [sidebarPinned, setSidebarPinned] = useState(false);
 
-  const handleSidebarVisibilityChange = (visible) => setSidebarVisible(visible);
   const handleSidebarPinToggle = () => {
-    const pinned = !sidebarPinned;
-    setSidebarPinned(pinned);
-    if (pinned) setSidebarVisible(true);
+    setSidebarPinned(prev => !prev);
   };
 
   return (
-    <div className="flex h-screen relative font-sans  overflow-hidden">
+    <div className="flex h-screen relative font-sans overflow-hidden">
       <Sidebar
-        isVisible={sidebarVisible}
         isPinned={sidebarPinned}
         onPinToggle={handleSidebarPinToggle}
-        onVisibilityChange={handleSidebarVisibilityChange}
       />
 
       <div
-        className={`flex-1 flex flex-col items-center justify-center p-10 min-h-screen transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${sidebarPinned ? 'ml-[280px]' : ''
+        className={`flex-1 flex flex-col items-center justify-center p-10 min-h-screen transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${sidebarPinned ? 'ml-[280px] max-md:ml-[260px]' : ''
           }`}
       >
         <div className="w-full max-w-[800px] flex flex-col items-center mb-12">
@@ -46,3 +41,4 @@ function App() {
 }
 
 export default App;
+// ...existing code...
