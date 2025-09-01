@@ -1,3 +1,4 @@
+/* Reset and global styles */
 * {
   margin: 0;
   padding: 0;
@@ -17,6 +18,61 @@ body {
   position: relative;
 }
 
+/* Sidebar trigger */
+.sidebar-trigger {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 101;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-trigger:hover {
+  transform: scale(1.1);
+}
+
+/* Hamburger icon */
+.hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger span {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #a5b4fc;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
 /* Main content */
 .main-content {
   flex: 1;
@@ -27,13 +83,14 @@ body {
   padding: 40px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 100vh;
+  margin-left: 0; /* Reset margin to avoid initial distortion */
 }
 
 .main-content.shifted {
-  margin-left: 280px;
+  margin-left: 280px; /* Match sidebar width */
 }
 
-/* Content sections with proper spacing */
+/* Content sections */
 .content-section {
   width: 100%;
   max-width: 800px;
@@ -43,20 +100,7 @@ body {
 }
 
 .content-section:not(:last-child) {
-  margin-bottom: 48px; /* Consistent spacing between sections */
-}
-
-/* Header styles */
-.main-title {
-  color: white;
-  font-size: 48px;
-  font-weight: 700;
-  text-align: center;
-  background: linear-gradient(135deg, #a5b4fc 0%, #c7d2fe 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0; /* Removed margin since we're using gap in main-content */
+  margin-bottom: 48px;
 }
 
 /* Suggestions grid */
@@ -66,27 +110,35 @@ body {
   gap: 16px;
   max-width: 800px;
   width: 100%;
-  margin: 0; /* Removed margin since we're using gap in main-content */
+  text-align: center;
+}
+
+.suggestions-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 .suggestion-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 16px;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-align: center;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .suggestion-card:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(99, 102, 241, 0.2);
   border-color: rgba(99, 102, 241, 0.5);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
 }
 
 /* Input container */
@@ -120,25 +172,21 @@ body {
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .main-title {
-    font-size: 36px;
+  .main-content {
+    padding: 20px;
   }
-  
-  .suggestions-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .suggestion-card {
-    padding: 18px;
-  }
-  
   .main-content.shifted {
     margin-left: 260px;
   }
-  
-  .main-content {
-    padding: 20px;
+  .suggestions-grid {
+    grid-template-columns: 1fr;
+  }
+  .suggestion-card {
+    padding: 12px;
+  }
+  .sidebar-trigger {
+    left: 15px;
+    top: 15px;
   }
 }
 
@@ -146,14 +194,19 @@ body {
   .main-content.shifted {
     margin-left: 0;
   }
-  
-  .main-title {
-    font-size: 28px;
-    margin-bottom: 32px;
+  .suggestions-title {
+    font-size: 20px;
+  }
+  .suggestion-card {
+    padding: 10px;
+  }
+  .sidebar-trigger {
+    left: 10px;
+    top: 10px;
   }
 }
 
-/* Smooth transitions for content shifting */
+/* Smooth transitions */
 .app-container * {
   transition-property: margin, padding, transform;
   transition-duration: 0.3s;
