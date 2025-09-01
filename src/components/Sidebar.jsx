@@ -1,8 +1,8 @@
+// ...existing code...
 import React, { useState } from "react";
 import { FaThumbtack } from "react-icons/fa";
 
-const Sidebar = () => {
-  const [isPinned, setIsPinned] = useState(false);
+const Sidebar = ({ isPinned, onPinToggle }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const sections = {
@@ -42,12 +42,13 @@ const Sidebar = () => {
         <div className="flex items-center justify-between p-5 border-b border-white/10">
           <h2 className="text-white font-semibold text-lg">Navigation</h2>
           <button
-            onClick={() => setIsPinned((prev) => !prev)}
+            onClick={onPinToggle}
             className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${isPinned
                 ? "text-indigo-400 bg-indigo-200/20"
                 : "text-white/70 hover:text-white hover:bg-white/10"
               }`}
             title={isPinned ? "Unpin Sidebar" : "Pin Sidebar"}
+            aria-pressed={isPinned}
           >
             <FaThumbtack />
           </button>
@@ -80,3 +81,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+// ...existing code...
