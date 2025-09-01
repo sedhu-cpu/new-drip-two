@@ -6,10 +6,9 @@ import './App.css';
 import { Header } from './components/Header';
 
 function App() {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
   const [sidebarPinned, setSidebarPinned] = useState(false);
 
-  const handleSidebarVisibilityChange = (visible) => setSidebarVisible(visible);
+  
   const handleSidebarPinToggle = () => {
     const pinned = !sidebarPinned;
     setSidebarPinned(pinned);
@@ -19,10 +18,8 @@ function App() {
   return (
     <div className="flex h-screen relative font-sans  overflow-hidden">
       <Sidebar
-        isVisible={sidebarVisible}
         isPinned={sidebarPinned}
         onPinToggle={handleSidebarPinToggle}
-        onVisibilityChange={handleSidebarVisibilityChange}
       />
 
       <div
