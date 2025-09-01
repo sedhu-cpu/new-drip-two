@@ -1,32 +1,73 @@
-import React from 'react';
-import { FaThumbtack } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaThumbtack } from "react-icons/fa";
 
-const Sidebar = ({ isPinned, onPinToggle }) => {
+const Sidebar = () => {
+  const [isPinned, setIsPinned] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
   const sections = {
-    "Recent Chats": ["Today's conversation", "Yesterday's chat", "Code review session", "Project planning"],
-    "Tools": ["Resume Matcher", "Resume Formatter", "Job Description Improver", "Contract Summary", "Policy QA"],
-    "Settings": ["Preferences", "Help & Support", "Theme"],
+    "Recent Chats": [
+      "Today's conversation",
+      "Yesterday's chat",
+      "Code review session",
+      "Project planning",
+    ],
+    Tools: [
+      "Resume Matcher",
+      "Resume Formatter",
+      "Job Description Improver",
+      "Contract Summary",
+      "Policy QA",
+    ],
+    Settings: ["Preferences", "Help & Support", "Theme"],
   };
 
   return (
-    <div className="sidebar-hover-area">
-      <div className={`sidebar ${isPinned ? 'pinned' : ''}`}>
-        <div className="sidebar-content">
-          <div className="sidebar-header">
-            <h2 className="sidebar-title">Navigation</h2>
-            <button 
-              className={`pin-button ${isPinned ? 'pinned' : ''}`} 
-              onClick={onPinToggle}
-              title={isPinned ? "Unpin Sidebar" : "Pin Sidebar"}
-            >
-              <FaThumbtack />
-            </button>
-          </div>
+    <>
+      <div
+        className="fixed left-0 top-0 w-[20px] h-screen z-[100] bg-transparent"
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => !isPinned && setIsVisible(false)}
+      />
+
+      <div
+        className={`fixed top-0 h-screen w-[280px] max-md:w-[260px] bg-black/90 backdrop-blur-[20px] border-r border-white/10 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col z-[99] ${isPinned || isVisible
+            ? "left-0"
+            : "left-[-280px] max-md:left-[-260px]"
+          }`}
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => !isPinned && setIsVisible(false)}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b border-white/10">
+          <h2 className="text-white font-semibold text-lg">Navigation</h2>
+          <button
+            onClick={() => setIsPinned((prev) => !prev)}
+            className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${isPinned
+                ? "text-indigo-400 bg-indigo-200/20"
+                : "text-white/70 hover:text-white hover:bg-white/10"
+              }`}
+            title={isPinned ? "Unpin Sidebar" : "Pin Sidebar"}
+          >
+            <FaThumbtack />
+          </button>
+        </div>
+
+        <div className="flex-1 p-5 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
           {Object.entries(sections).map(([section, items]) => (
-            <div key={section} className="sidebar-section">
-              <h3 className="sidebar-section-title">{section}</h3>
+            <div key={section} className="mb-6">
+              <h3 className="text-white/80 uppercase text-xs font-semibold mb-3">
+                {section}
+              </h3>
               {items.map((item, index) => (
-                <div key={index} className={`sidebar-item ${item === "Today's conversation" ? 'active' : ''}`}>
+                <div
+                  key={index}
+                  className={`flex items-center gap-3 px-4 py-3 text-sm rounded-lg cursor-pointer mb-1 transition-all duration-200
+                    ${item === "Today's conversation"
+                      ? "bg-indigo-200/20 text-indigo-200 border-l-3 border-indigo-500 pl-[13px] transform"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
+                    }`}
+                >
                   {item}
                 </div>
               ))}
@@ -34,7 +75,7 @@ const Sidebar = ({ isPinned, onPinToggle }) => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
