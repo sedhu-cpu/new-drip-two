@@ -1,7 +1,7 @@
-import "../styles/header.css";
+export const Header = () => {
+  return <h1 className="text-4xl font-bold text-center">
+    How Can I Assist You?
+  </h1>
 
-function Header() {
-  return <h1 className="header-title">How Can I Assist You?</h1>;
 }
 
-export default Header;

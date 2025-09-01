@@ -30,7 +30,7 @@ const Sidebar = ({ isVisible, isPinned, onPinToggle, onVisibilityChange }) => {
         }
         
         const timeout = setTimeout(() => {
-          onVisibilityChange(false);
+          onVisibilityChange(false); 
         }, 150);
         setHoverTimeout(timeout);
       }

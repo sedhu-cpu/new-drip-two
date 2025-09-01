@@ -67,6 +67,9 @@ button:focus-visible {
   }
 } */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* index.css */
 
@@ -80,4 +83,3 @@ body {
   align-items: center;
   justify-content: center;
 }
-
