@@ -1,6 +1,7 @@
 // ...existing code...
 import React, { useState } from "react";
 import { FaThumbtack } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isPinned, onPinToggle }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,6 +23,12 @@ const Sidebar = ({ isPinned, onPinToggle }) => {
     Settings: ["Preferences", "Help & Support", "Theme"],
   };
 
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
   return (
     <>
       <div
@@ -32,8 +39,8 @@ const Sidebar = ({ isPinned, onPinToggle }) => {
 
       <div
         className={`fixed top-0 h-screen w-[280px] max-md:w-[260px] bg-black/90 backdrop-blur-[20px] border-r border-white/10 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col z-[99] ${isPinned || isVisible
-            ? "left-0"
-            : "left-[-280px] max-md:left-[-260px]"
+          ? "left-0"
+          : "left-[-280px] max-md:left-[-260px]"
           }`}
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={() => !isPinned && setIsVisible(false)}
@@ -44,8 +51,8 @@ const Sidebar = ({ isPinned, onPinToggle }) => {
           <button
             onClick={onPinToggle}
             className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${isPinned
-                ? "text-indigo-400 bg-indigo-200/20"
-                : "text-white/70 hover:text-white hover:bg-white/10"
+              ? "text-indigo-400 bg-indigo-200/20"
+              : "text-white/70 hover:text-white hover:bg-white/10"
               }`}
             title={isPinned ? "Unpin Sidebar" : "Pin Sidebar"}
             aria-pressed={isPinned}
@@ -60,18 +67,27 @@ const Sidebar = ({ isPinned, onPinToggle }) => {
               <h3 className="text-white/80 uppercase text-xs font-semibold mb-3">
                 {section}
               </h3>
-              {items.map((item, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center gap-3 px-4 py-3 text-sm rounded-lg cursor-pointer mb-1 transition-all duration-200
-                    ${item === "Today's conversation"
-                      ? "bg-indigo-200/20 text-indigo-200 border-l-3 border-indigo-500 pl-[13px] transform"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                    }`}
-                >
-                  {item}
-                </div>
-              ))}
+              {items.map((item, index) => {
+                const to = `/${slugify(section)}/${slugify(item)}`;
+
+                const activeClasses =
+                  "bg-indigo-200/20 text-indigo-200 border-l-3 border-indigo-500 pl-[13px] transform";
+                const baseClasses =
+                  "flex items-center gap-3 px-4 py-3 text-sm rounded-lg mb-1 transition-all duration-200";
+
+                return (
+                  <NavLink
+                    key={index}
+                    to={to}
+                    end
+                    className={({ isActive }) =>
+                      `${baseClasses} ${isActive ? activeClasses : "text-white/70 hover:text-white hover:bg-white/10"}`
+                    }
+                  >
+                    {item}
+                  </NavLink>
+                );
+              })}
             </div>
           ))}
         </div>
